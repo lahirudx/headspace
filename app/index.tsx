@@ -1,9 +1,19 @@
-import { Text, View } from "react-native";
+import { FlatList } from "react-native";
+import { meditations } from "@/data";
+import MeditationListItem from "@/components/MeditationListItem";
+
+const meditation = meditations[0];
 
 export default function Page() {
   return (
-    <View>
-      <Text className="text-red-500 text-4xl p-10">Hello World</Text>
-    </View>
+    <>
+      <FlatList
+        data={meditations}
+        renderItem={({ item }) => <MeditationListItem meditation={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerClassName="gap-5 p-3"
+        className="bg-white"
+      />
+    </>
   );
 }
