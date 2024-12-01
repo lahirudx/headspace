@@ -11,7 +11,7 @@ export default function Page() {
         data={meditations}
         renderItem={({ item }) => <MeditationListItem meditation={item} />}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerClassName="gap-5 p-3"
+        contentContainerClassName="gap-8 p-3"
         className="bg-white"
       />
     </>
