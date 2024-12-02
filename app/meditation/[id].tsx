@@ -9,6 +9,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Slider from "@react-native-community/slider";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 const Details = () => {
   const { id } = useLocalSearchParams();
@@ -153,6 +154,7 @@ const Details = () => {
       className="bg-orange-400 h-full"
       style={{ paddingTop: insets.top + 10, paddingBottom: insets.bottom + 10 }}
     >
+      <AnimatedBackground />
       <View className="flex-row justify-between items-center p-5">
         <AntDesign name="infocirlceo" size={26} color="black" />
         <Text className="text-xl font-semibold bg-zinc-800 rounded-xl text-white p-2 text-center">
