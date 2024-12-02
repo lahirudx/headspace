@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Headspace",
+    "name": "Headspace Lite",
     "slug": "Headspace",
     "scheme": "headspace",
     "version": "1.0.0",
@@ -14,7 +14,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lahirudx.headspace"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +29,20 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "10949e40-99ae-46b6-ab68-2839e70d138a"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/10949e40-99ae-46b6-ab68-2839e70d138a"
+    }
   }
 }

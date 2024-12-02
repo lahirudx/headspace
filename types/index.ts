@@ -4,4 +4,5 @@ export type Meditation = {
   duration: number;
   type: "audio" | "video";
   pro: boolean;
+  audioUrl: string;
 };

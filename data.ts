@@ -1,5 +1,6 @@
 import { Meditation } from "@/types";
 
+// data.ts
 export const meditations: Meditation[] = [
   {
     id: 1,
@@ -7,6 +8,7 @@ export const meditations: Meditation[] = [
     duration: 1,
     type: "audio",
     pro: false,
+    audioUrl: "https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav",
   },
   {
     id: 2,
@@ -14,6 +16,7 @@ export const meditations: Meditation[] = [
     duration: 5,
     type: "audio",
     pro: true,
+    audioUrl: "https://www2.cs.uic.edu/~i101/SoundFiles/ImperialMarch60.wav",
   },
   {
     id: 3,
@@ -21,6 +24,7 @@ export const meditations: Meditation[] = [
     duration: 10,
     type: "audio",
     pro: true,
+    audioUrl: "https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand60.wav",
   },
   {
     id: 4,
@@ -28,6 +32,7 @@ export const meditations: Meditation[] = [
     duration: 15,
     type: "audio",
     pro: true,
+    audioUrl: "https://www2.cs.uic.edu/~i101/SoundFiles/PinkPanther60.wav",
   },
   {
     id: 5,
@@ -35,6 +40,7 @@ export const meditations: Meditation[] = [
     duration: 8,
     type: "audio",
     pro: true,
+    audioUrl: "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav",
   },
   {
     id: 6,
@@ -42,5 +48,6 @@ export const meditations: Meditation[] = [
     duration: 3,
     type: "audio",
     pro: true,
+    audioUrl: "https://www2.cs.uic.edu/~i101/SoundFiles/tada.wav",
   },
 ];

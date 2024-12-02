@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { meditations } from "@/data";
@@ -17,6 +17,8 @@ const Details = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const meditation = meditations.find((m) => m.id === Number(id));
 
@@ -29,22 +31,66 @@ const Details = () => {
     };
   }, []);
 
+  useEffect(() => {
+    async function setupAudio() {
+      try {
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+          staysActiveInBackground: true,
+          shouldDuckAndroid: true,
+        });
+      } catch (error) {
+        console.error("Failed to setup audio", error);
+      }
+    }
+    setupAudio();
+  }, []);
+
   async function loadAudio() {
-    const { sound } = await Audio.Sound.createAsync(
-      require("@/assets/meditations/audio1.mp3")
-    );
-    setSound(sound);
+    if (!meditation?.audioUrl) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        { uri: meditation.audioUrl },
+        { shouldPlay: false },
+        (status) => {
+          if (status.isLoaded) {
+            setPosition(status.positionMillis);
+            setDuration(status.durationMillis || 0);
+          }
+        }
+      );
+
+      setSound(sound);
+
+      const status = await sound.getStatusAsync();
+      if (status.isLoaded) {
+        setDuration(status.durationMillis || 0);
+      }
+    } catch (error) {
+      setError("Failed to load audio");
+      console.error("Failed to load audio", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   async function handlePlayPause() {
-    if (!sound) return;
+    if (!sound || isLoading) return;
 
-    if (isPlaying) {
-      await sound.pauseAsync();
-    } else {
-      await sound.playAsync();
+    try {
+      if (isPlaying) {
+        await sound.pauseAsync();
+      } else {
+        await sound.playAsync();
+      }
+      setIsPlaying(!isPlaying);
+    } catch (error) {
+      console.error("Failed to play/pause", error);
     }
-    setIsPlaying(!isPlaying);
   }
 
   const formatTime = (milliseconds: number) => {
@@ -75,7 +121,7 @@ const Details = () => {
   }, [sound, isPlaying]);
 
   const handleSliderChange = (value: number) => {
-    setPosition(value); // Update UI only while sliding
+    setPosition(value);
   };
 
   const handleSliderComplete = async (value: number) => {
@@ -83,6 +129,20 @@ const Details = () => {
     await sound.setPositionAsync(value);
     setPosition(value);
   };
+
+  if (error) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <Text className="text-red-500 text-center mb-4">{error}</Text>
+        <FontAwesome6
+          onPress={loadAudio}
+          name="rotate-right"
+          size={24}
+          color="#3A3937"
+        />
+      </View>
+    );
+  }
 
   if (!meditation) {
     return <Text>Meditation Not Found</Text>;
@@ -112,17 +172,12 @@ const Details = () => {
       </Text>
       <View className="flex-1 items-center justify-center">
         <View className="self-center items-center w-24 rounded-full aspect-square justify-center bg-zinc-800">
-          {isPlaying ? (
-            <FontAwesome6
-              onPress={handlePlayPause}
-              name="pause"
-              size={24}
-              color="snow"
-            />
+          {isLoading ? (
+            <ActivityIndicator color="white" />
           ) : (
             <FontAwesome6
               onPress={handlePlayPause}
-              name="play"
+              name={isPlaying ? "pause" : "play"}
               size={24}
               color="snow"
             />
