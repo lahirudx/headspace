@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.lahirudx.headspace"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -37,9 +38,6 @@
       "eas": {
         "projectId": "10949e40-99ae-46b6-ab68-2839e70d138a"
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/10949e40-99ae-46b6-ab68-2839e70d138a"
